@@ -1,4 +1,4 @@
-# Yelle's Library of C(++)
+# Yelle's Library of Code
 
 This repository is intended to be a holding room where I can upload all of the general-purpose scripts, classes, templates, and such for C++... perhaps to be joined by other languages in the future.
 
