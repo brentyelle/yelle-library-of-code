@@ -576,40 +576,29 @@ public:
 
     // at-method: allows access to the elements of `array` directly, with bounds checking on the row
     std::vector<T>& at(const size_t i, const size_t j) {
-        if (i >= array.size()) {
-            throw std::out_of_range("tried to access nonexistent row of array");
-        }
-        else if (j >= array[i].size()) {
-            throw std::out_of_range("tried to access nonexistent column of array");
-        }
-        else {
+        if (i < array.size() && j < array[i].size()) {
             return array[i][j];
+        } else {
+            throw std::out_of_range("tried to access nonexistent row or column of array");
         }
     }
 
     // `const` at-method: allows `const`-access to the elements of `array` directly, with bounds checking on the row
     const std::vector<T>& at(const size_t i, const size_t j) const {
-        if (i >= array.size()) {
-            throw std::out_of_range("tried to access nonexistent row of array");
-        }
-        else if (j >= array[i].size()) {
-            throw std::out_of_range("tried to access nonexistent column of array");
-        }
-        else {
+        if (i < array.size() && j < array[i].size()) {
             return array[i][j];
+        } else {
+            throw std::out_of_range("tried to access nonexistent row or column of array");
         }
     }
 
     // returns a `std::optional` copy of the element stored at `[i,j]`. If there is no element at `[i,j]`, then returns a null optional.
     std::optional<T> safe_look(const size_t i, const size_t j) const noexcept {
-        std::optional<T> result;
-        try {
-            result = std::optional<T>(at(i,j));
+        if (i < array.size() && j < array[i].size()) {
+            return std::optional<T>(array[i][j]);
+        } else {
+            return std::optional<T>();
         }
-        catch (std::out_of_range &e) {
-            result.reset();
-        }
-        return result;
     }
 
     // Allows access to the elements of `array` directly, but one-dimensionally. For example:
