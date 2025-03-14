@@ -125,10 +125,10 @@ def pickle_setup():
     return
 
 def romanize_nihon_shiki(kana_string: str):
-    REPLACEMENTS  = [("ily", "y" ), ("ile", "ye"),  ("ul", "w"  ), ("ww",  "w" ),
-                     ("tel", "t'"), ("del", "d'"),  ("tol", "tw"), ("dol", "dw"),
-                     ("Qp",  "pp"), ("Qt",  "tt"),  ("Qk",  "kk"), ("Qs", "ss" ),
-                     ("Qb",  "bb"), ("Qd",  "dd"),  ("Qg",  "gg"), ("Qz", "zz" )] 
+    REPLACEMENTS  = [("ily", "y" ), ("ile", "ye"),  ("ul",  "w" ), ("ww",  "w" ),
+                     ("tel", "t'"), ("del", "d'"),  ("tol", "t'"), ("dol", "d'"),
+                     ("Qp",  "pp"), ("Qt",  "tt"),  ("Qk",  "kk"), ("Qs",  "ss"),
+                     ("Qb",  "bb"), ("Qd",  "dd"),  ("Qg",  "gg"), ("Qz",  "zz")] 
     romaji_string = ""
     for ch in kana_string:
         romaji_string += (global_romanization[ch] if ch in global_romanization else " ")
