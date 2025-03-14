@@ -190,7 +190,7 @@ def search_in_dictionary(search_list    : list[tuple[SearchType, str]],
                          save_filename  : str  = None,
                          toss_links     : bool = True,
                          strip_html     : bool = True,
-                         verbose        : bool = False):
+                         verbose        : bool = True):
     
     print(f"------------------------------------------------------\nAbout to search using the terms:")
     for s_type, s_term in search_list:
