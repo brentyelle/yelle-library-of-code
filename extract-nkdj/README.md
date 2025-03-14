@@ -64,6 +64,7 @@ The format of `search_list` should be as such:
     *   `FULL_KEY_LACKS_ALL` -- the key (WITH kanji) lacks ***ALL*** of the given strings
     *   `DEFINITION_CONTAINS` -- the definition contains ANY of the given strings
 * Romaji should be in Nihon-Shiki romanization.
+    *   Refer to functions `pickle_setup()` and `romanize_nihon_shiki()` for peculiarities, e.g., ツァ being `twa` and デュ being `d'yu`.
 * The items of each `search_terms` are on an **or** basis: Only one of them needs to be fulfilled in order for a dictionary entry to match.
     * The exception is `FULL_KEY_LACKS_ALL`, where they are on a **nor** basis: If any of the strings in the `search_terms` are found, then the dictionary entry is omitted from the search results.
 * The items of the `search_list` are on an **and** basis: Each of the must be fulfilled in order for a dictionary entry to match.
