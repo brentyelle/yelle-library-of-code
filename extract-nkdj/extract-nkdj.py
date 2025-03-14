@@ -189,6 +189,7 @@ def search_in_dictionary(search_list    : list[tuple[SearchType, str]],
                          limit          : int  = None,
                          save_filename  : str  = None,
                          toss_links     : bool = True,
+                         strip_html     : bool = True,
                          verbose        : bool = False):
     
     print(f"------------------------------------------------------\nAbout to search using the terms:")
@@ -219,7 +220,7 @@ def search_in_dictionary(search_list    : list[tuple[SearchType, str]],
             if save_file:
                 save_file.write(k)
                 save_file.write(SEPARATOR_BIN)
-                save_file.write(delete_html(vd).encode())
+                save_file.write(delete_html(vd).encode() if strip_html else v)
             # count the results
             ct += 1
             if (not verbose) and ct % 100 == 0:
