@@ -1,10 +1,4 @@
-# Yelle's Library of Code
-
-This repository is intended to be a holding room where I can upload all of the general-purpose scripts, classes, templates, and such for C++... perhaps to be joined by other languages in the future.
-
-## C++ Contents:
-
-### `array2d.cpp`
+# `array2d.cpp`
 
 Provides a class template for `Array2D<T>`, which is a two-dimensional array of objects of type `T`, guaranteed to be rectangular (throwing errors if attempts are made to make it non-rectangular). Nearly all methods (both const and non-const) return a reference to `*this`, meaning that they can be chained together easily.
 At the moment, it is implemented as a `std::vector<std::vector<T>>` with lots of methods piled on top of it. However, due to this implementation, and in spite of the many checks I've put in place, a user *can* make the array non-rectangular via directly accessing the sub-vectors; to that end, I've created a `verifyDimensions` function that can be called whenever to double-check, throwing a `std::length_error` on the first row whose length does not match the 0-indexed row's length.
