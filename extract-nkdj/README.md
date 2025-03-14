@@ -33,11 +33,12 @@ This first-time run will build the files `__nkdj.pickle`, `__pos.pickle`, and `_
 
 To search in the NKDJ, add an instance of the function `search_in_dictionary(…)` to the `main()` function. Multiple searches can be done in sequence! The parameters are:
 
-* `search_list`: List of all search parameters (see below for instructions).
-* `limit` (default `None`): Maximum number of entries to look for. If this limit is reached, the search is stopped and only the first `limit` results are kept. If  `None`, then the search is unlimited.
-* `save_filename` (default `None`): The file to save the plaintext search results to. If `None`, then the search results are not saved (in which case I recommend `verbose = True`).
-* `toss_links` (default `True`): Only real entries will be kept in the search results; headwords that merely redirect to other entries will be omitted. In my experience, you'll usually want to leave this as the default `True`.
-* `verbose` (default `False`): Every positive search result will be printed to Standard Output.
+* `search_list`: Lost of all search parameters (see below for instructions).
+* `limit` (default `None`): Maximum number of entries to look for. If this limit is reached, the search is stopped and only the first `limit` results are kept (both for printing to Standard Output and for writing to a file). If  `None`, then the search is unlimited.
+* `save_filename` (default `None`): Name (with path) of the file to save the plaintext search results to. If `None`, then the search results are not saved (in which case I recommend `verbose=True`).
+* `toss_links` (default `True`): Option to exclude headwords that merely redirect to other entries, i.e., to keep only those headwords that have a definition under them. In my experience, you'll usually want to leave this as the default `True`.
+* `strip_html` (default `True`): Option to remove the HTML tags from the definition when writing the search results to a file. (Does nothing if `save_filename=None`).
+* `verbose` (default `True`): Option to print every search result to Standard Output.
 
 After adding the `search_in_dictionary`s to the `main()` function, run the program again:
 
@@ -73,14 +74,13 @@ I want to find
 
 1. ...words that end in っと or うと or んど or うど,
 2. ...and have the kanji 人 or 者 in their full heading,
-3. ...then print all results to Standard Output,
-4. ...and save the results to a file called `hito-onbin.txt`.
+3. ...and save the results to a file called `hito-onbin.txt`.
 
 ```Python
 search_in_dictionary(search_list=[
     (SearchType.KANA_KEY_ENDS_WITH, ["うと", "っと", "んど", "うど"]),
     (SearchType.FULL_KEY_CONTAINS,  ["人", "者"])
-], verbose=True, save_filename="hito-onbin.txt")
+], save_filename="hito-onbin.txt")
 ```
 
 I want to find
@@ -88,23 +88,22 @@ I want to find
 1. ...words that start with ま,
 2. ...that also have っ in them,
 3. ...and don't contain the kanji 真,
-4. ...print the results to Standard Output,
-5. ...and not save them to a file.
+4. ...and not save the results to a file.
 
 ```Python
 search_in_dictionary(search_list=[
     (SearchType.KANA_KEY_STARTS_WITH, ["ま"]),
     (SearchType.KANA_KEY_CONTAINS, ["っ"]),
     (SearchType.FULL_KEY_LACKS_ALL,  ["真"])
-], verbose=True)
+])
 ```
 
 I want to find
 
 1. ...words that contain 人 or 者 or 家,
 2. ...that also have 非 or 無 or 不 or 否 in them,
-3. ...not print it to Standard Output,
-4. ...and instead save it to a file called `negative-people.txt`.
+3. ...and not print the results to Standard Output,
+4. ...but save the results to a file called `negative-people.txt`.
 
 ```Python
 search_in_dictionary(search_list=[
