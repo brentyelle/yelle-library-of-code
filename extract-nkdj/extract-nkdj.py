@@ -188,7 +188,7 @@ def pad_fullwidth(str_to_pad, min_width):
 def search_in_dictionary(search_list    : list[tuple[SearchType, str]],
                          limit          : int  = None,
                          save_filename  : str  = None,
-                         toss_links     : bool = False,
+                         toss_links     : bool = True,
                          verbose        : bool = False):
     
     print(f"------------------------------------------------------\nAbout to search using the terms:")
@@ -259,6 +259,7 @@ def main():
         print(f"Loaded dictionary object `{PICKLE_NAME_NKDJ}`.")
     
     # ----- ADD SEARCHES BELOW -------
+
 
     # ----- ADD SEARCHES ABOVE -------
     return
