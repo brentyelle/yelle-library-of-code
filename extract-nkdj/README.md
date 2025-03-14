@@ -18,9 +18,9 @@ Provides functionality for searching through the 日本国語大辞典 *Nihon Ko
 git clone https://github.com/zhansliu/writemdict.git
 ```
 
-3. Place (or copy) your `.mdx` file of the NKDJ into the same `…/mdict-analysis` directory.
-4. Download `extract-nkdj.py` and place it into the same directory.
-5. If necessary, change the value of the variable `DICT_FILE` in `extract-nkdj.py` to match your NKDJ `.mdx` file.
+3. Download `extract-nkdj.py` and place it into the resulting `…/mdict-analysis` directory.
+4. Place (or copy) your `.mdx` file of the NKDJ into the same directory, or change the variable `DICT_PATH` to be the path to your file. Make sure forward slashes (`/`) are used instead of backslashes. A final `/` should be included in the path.  
+5. If necessary, change the value of the variable `DICT_FILE` in `extract-nkdj.py` to match the name of your NKDJ `.mdx` file.
 6. Run `extract-nkdj.py` by using
 
 ```bash
