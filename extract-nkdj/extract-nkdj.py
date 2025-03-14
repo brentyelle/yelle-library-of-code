@@ -6,16 +6,17 @@ import re
 from enum import Enum
 sys.stdout.reconfigure(encoding='utf-8')
 
-DICT_PATH          = "/Users/Brent/Documents/LINGUISTICS/#TO_SORT/Nihon Kokugo Daijiten (2nd ed) MDict File/"
-DICT_FILE          = "（小学館）日本国語大辞典［第二版］.mdx"
+DICT_PATH          = "./"
+DICT_FILE          = "nkdj.mdx"
 PICKLE_NAME_NKDJ   = "./__nkdj.pickle"
 PICKLE_NAME_POS    = "./__pos.pickle"
 PICKLE_NAME_ROMAJI = "./__romaji.pickle"
 SEPARATOR_STR      = "\t"
 SEPARATOR_BIN      = SEPARATOR_STR.encode()
 REGEX_DELETE_HTML  = re.compile("<.*?>")
-global_parts_of_speech : dict[str, str] = None
-global_romanization    : dict[str, str] = None
+global_dictionary      : dict[bytes, bytes] = None
+global_parts_of_speech : dict[str, str]     = None
+global_romanization    : dict[str, str]     = None
 
 class SearchType(Enum):
     KANA_KEY_CONTAINS       = 1         # the key (w/o kanji) contains any of the given strings
@@ -184,8 +185,7 @@ def pad_fullwidth(str_to_pad, min_width):
     effective_width = 2 * len(str_to_pad)
     return str_to_pad if effective_width >= min_width else (str_to_pad + " " * (min_width - effective_width))
 
-def search_in_dictionary(dictionary     : dict[bytes, bytes],
-                         search_list    : list[tuple[SearchType, str]],
+def search_in_dictionary(search_list    : list[tuple[SearchType, str]],
                          limit          : int  = None,
                          save_filename  : str  = None,
                          toss_links     : bool = False,
@@ -198,7 +198,7 @@ def search_in_dictionary(dictionary     : dict[bytes, bytes],
 
     save_file = open(save_filename, "wb") if save_filename else None
     ct        = 0
-    for k, v in dictionary.items():
+    for k, v in global_dictionary.items():
         # convert from binary to UTF8 string
         kd: str = k.decode()
         vd: str = v.decode()
@@ -254,52 +254,11 @@ def main():
         global_romanization = pickle.load(f2)
         print(f"Loaded romanization object `{PICKLE_NAME_ROMAJI}`.")
     with open(PICKLE_NAME_NKDJ, "rb") as f3:
-        PICKLED_DICTIONARY : dict[bytes, bytes] = pickle.load(f3)
+        global global_dictionary
+        global_dictionary = pickle.load(f3)
         print(f"Loaded dictionary object `{PICKLE_NAME_NKDJ}`.")
     
     # ----- ADD SEARCHES BELOW -------
-
-    # search_in_dictionary(PICKLED_DICTIONARY, search_list=[
-    #     (SearchType.KANA_KEY_ENDS_WITH, ["うと", "っと", "んど", "うど"]),
-    #     (SearchType.FULL_KEY_CONTAINS, ["【"]),
-    #     (SearchType.FULL_KEY_LACKS, ["人", "─】"])
-    # ], toss_links=True, verbose=True, save_filename="./hito-onbin-no-jin.txt")
-
-    # search_in_dictionary(PICKLED_DICTIONARY, search_list=[
-    #     (SearchType.KANA_KEY_ENDS_WITH, ["うと", "っと", "んど", "うど"]),
-    #     (SearchType.FULL_KEY_CONTAINS, ["人】"])
-    # ], toss_links=True, verbose=True, save_filename="./hito-onbin-with-jin.txt")
-
-    # search_in_dictionary(PICKLED_DICTIONARY, search_list=[
-    #     (SearchType.DEFINITION_CONTAINS, ["男種", "陰茎", "女陰", "性器", "陰部"])
-    # ], toss_links=True, verbose=True, save_filename="ryan-euphemism-search.txt")
-
-    # search_in_dictionary(PICKLED_DICTIONARY, search_list=[
-    #     (SearchType.KANA_KEY_CONTAINS, ["しね", "しな"]),
-    #     (SearchType.FULL_KEY_CONTAINS, ["稲", "米"])
-    # ], toss_links=True, verbose=True)
-
-    # search_in_dictionary(PICKLED_DICTIONARY, search_list=[
-    #     (SearchType.KANA_KEY_CONTAINS, ["さお"]),
-    #     (SearchType.FULL_KEY_CONTAINS, ["青", "蒼", "碧", "藍"])
-    # ], toss_links=True, verbose=True)
-
-    # search_in_dictionary(PICKLED_DICTIONARY, search_list=[
-    #     (SearchType.KANA_KEY_CONTAINS, ["そ"]),
-    #     (SearchType.FULL_KEY_CONTAINS, ["緒", "麻", "糸", "苧"])
-    # ], toss_links=True, verbose=True)
-
-    # search_in_dictionary(PICKLED_DICTIONARY, search_list=[
-    #     (SearchType.ROMAJI_KEY_CONTAINS, ["yuud", "yuug", "yuuz", "yuub"])
-    # ], toss_links=True, verbose=True)
-
-    # search_in_dictionary(PICKLED_DICTIONARY, search_list=[
-    #     (SearchType.DEF_CONTAINS, ["隠語"])
-    # ], toss_links=True, verbose=False, save_filename="ingo.txt")
-
-    search_in_dictionary(PICKLED_DICTIONARY, search_list=[
-        (SearchType.ROMAJI_KEY_CONTAINS, ["t'a", "t'e", "t'o", "d'a", "d'e", "d'o"])
-    ], toss_links=True, verbose=True)
 
     # ----- ADD SEARCHES ABOVE -------
     return
